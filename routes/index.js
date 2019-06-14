@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var mongoose= require('mongoose');
+var Mazda = require('../models/autos');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -25,5 +27,20 @@ router.get('/Toyota', function (req, res, next){
 
 	res.render('Toyota', infoToyo);
 });	
+
+router.post('/alta', function(req, res, next){
+	//crear un bojeto mongo
+	//hacer el insert
+	var miMazda=Mazda({
+		nombre:req.body.nombre,
+		foto:req.body.foto
+	});
+	miMazda.save(function(err, data){
+		if (err) {console.log('error');}
+		else{
+			res.render('resultadoAlta',data);
+		}
+	});
+});
 
 module.exports = router;
